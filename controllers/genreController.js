@@ -150,18 +150,16 @@ exports.genre_delete_post = function(req, res, next) {
 // Display Genre update form on GET.
 exports.genre_update_get = function (req, res, next) {
   // Get Genre
-  Genre.findById(req.params.id)
-    .exec(function (err, genre) {
-      if (err) { return next(err); }
-      if (genre==null) { // No results.
-        var err = new Error('Genre not found');
-        err.status = 404;
-        return next(err);
-      }
-      // Successful, so render.
-      res.render('genre_form', { title: 'Update Genre', genre: genre} );
- 
-})
+  Genre.findById(req.params.id, function (err, genre) {
+    if (err) { return next(err); }
+    if (genre==null) { // No results.
+      var err = new Error('Genre not found');
+      err.status = 404;
+      return next(err);
+    }
+    // Successful, so render.
+    res.render('genre_form', { title: 'Update Genre', genre: genre} );
+  })
   
 };
 
@@ -169,7 +167,7 @@ exports.genre_update_get = function (req, res, next) {
 exports.genre_update_post = [
 
   // Validate and sanitize fields.
-  body('name', 'Name must not be empty.').trim().isLength({ min: 3, max:100 }).escape(),
+  body('name', 'Name must contain at least 3 and at most 100 characters.').trim().isLength({ min: 3, max:100 }).escape(),
   
   // Process request after validation and sanitization.
   (req, res, next) => {
@@ -191,7 +189,7 @@ exports.genre_update_post = [
       .exec(function (err, genre) {
         if (err) { return next(err); }
 
-        res.render('genre_form', { title: 'Update Genre', genre: genre} );
+        res.render('genre_form', { title: 'Update Genre', genre: genre, errors: errors.array()} );
       })
       
     } else {
