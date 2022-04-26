@@ -170,7 +170,7 @@ exports.book_delete_get = function (req, res) {
         book: function(callback) {
             Book.findById(req.params.id).exec(callback)
         },
-        bookinstances_book: function(callback) {
+        book_instances: function(callback) {
             BookInstance.find({ 'book': req.params.id }).exec(callback)
         },
     }, function(err, results) {
@@ -179,7 +179,7 @@ exports.book_delete_get = function (req, res) {
             res.redirect('/catalog/books');
         }
         // Successful, so render.
-        res.render('book_delete', { title: 'Delete Book', book: results.book, bookinstances_book: results.bookinstances_book } );
+        res.render('book_delete', { title: 'Delete Book', book: results.book, book_instances: results.book_instances } );
     });
 };
 
