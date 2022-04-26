@@ -132,12 +132,12 @@ exports.genre_delete_post = function(req, res, next) {
       if (err) { return next(err); }
       // Success
       if (results.genres_books.length > 0) {
-          // Author has books. Render in same way as for GET route.
+          // Genre has books. Render in same way as for GET route.
           res.render('genre_delete', { title: 'Delete Genre', genre: results.genre, genre_books: results.genres_books } );
           return;
       }
       else {
-          // Author has no books. Delete object and redirect to the list of authors.
+          // Genre has no books. Delete object and redirect to the list of genres.
           Genre.findByIdAndRemove(req.body.genreid, function deleteGenre(err) {
               if (err) { return next(err); }
               // Success - go to author list
