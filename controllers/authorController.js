@@ -1,7 +1,8 @@
 var Author = require('../models/author');
 var async = require('async');
 var Book = require('../models/book');
-const { body,validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
+var debug = require('debug')('author');
 
 // Display list of all Authors.
 exports.author_list = function(req, res, next) {
@@ -44,7 +45,7 @@ exports.author_detail = function(req, res, next) {
 
 
 // Display Author create form on GET.
-exports.author_create_get = function(req, res, next) {
+exports.author_create_get = function (req, res, next) {
     res.render('author_form', { title: 'Create Author'});
 };
 
@@ -114,7 +115,9 @@ exports.author_delete_get = function(req, res, next) {
 };
 
 // Handle Author delete on POST.
-exports.author_delete_post = function(req, res, next) {
+exports.author_delete_post = function (req, res, next) {
+    
+
 
     async.parallel({
         author: function(callback) {
@@ -144,10 +147,14 @@ exports.author_delete_post = function(req, res, next) {
 
 
 // Display Author update form on GET.
-exports.author_update_get = function(req, res, next) {
+exports.author_update_get = function (req, res, next) {
+
     Author.findById(req.params.id)
         .exec(function (err, author) {
-            if (err) { return next(err); }
+            if (err) {
+                debug('update error:' + err);
+                return next(err);
+            }
             if (author==null) { // No results.
                 var err = new Error('Book not found');
                 err.status = 404;
@@ -167,8 +174,8 @@ exports.author_update_post = [
     body('first_name', 'required').trim().isLength({
         min: 1,
         max: 100
-    }).escape(),
-    body('family_name', 'required').trim().isLength({ min: 1,max: 100 }).escape(),
+    }) .isAlphanumeric().escape(),
+    body('family_name', 'required').trim().isLength({ min: 1,max: 100 }).isAlphanumeric().escape(),
     body('date_of_birth', 'Invalid date of birth').optional({ checkFalsy: true }).isISO8601().toDate().escape(),
     body('date_of_death', 'Invalid date of death').optional({ checkFalsy: true }).isISO8601().toDate().escape(),
     
@@ -190,12 +197,17 @@ exports.author_update_post = [
 
         if (!errors.isEmpty()) {
              // There are errors. Render form again with sanitized values/error messages.
+             debug('update error:' + errors);
             res.render('author_form', { title: 'Update author', author: author, errors: errors.array() });
             return;
         } else {
              // Data from form is valid. Update the record.
             Author.findByIdAndUpdate(req.params.id, author, {}, function (err, theauthor) {
-                if (err) { return next(err); }
+                if (err) {
+                    debug('update error:' + err);
+                    return next(err);
+                }
+                
                    // Successful - redirect to author detail page.
                    res.redirect(theauthor.url);
                 });
