@@ -36,7 +36,7 @@ AuthorSchema.virtual('lifespan').get(function() {
 AuthorSchema
 .virtual('url')
 .get(function () {
-  return '/catalog/author/' + this._id;
+  return '/authors/' + this._id;
 });
 
 // Virtual for author's date_of_birth_formatted

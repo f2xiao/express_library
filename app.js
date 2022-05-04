@@ -8,10 +8,15 @@ const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" area of site
+//Import routes for "catalog" area of site
+const catalogRouter = require('./routes/catalog'); 
+const booksRouter = require('./routes/booksRoutes');
+const authorsRouter = require('./routes/authorsRoutes');
+const genresRouter = require('./routes/genresRoutes');
+const bookinstancesRouter = require('./routes/bookinstancesRoutes');
 
-var compression = require('compression');
-var helmet = require('helmet');
+const compression = require('compression');
+const helmet = require('helmet');
 const app = express();
 
 
@@ -36,7 +41,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/catalog', catalogRouter);  // Add catalog routes to middleware chain.
+// Add catalog routes to middleware chain.
+app.use('/catalog', catalogRouter);  
+app.use('/books', booksRouter);
+app.use('/authors', authorsRouter);
+app.use('/genres', genresRouter);
+app.use('/bookinstances', bookinstancesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
