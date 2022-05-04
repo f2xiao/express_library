@@ -176,7 +176,7 @@ exports.book_delete_get = function (req, res) {
     }, function(err, results) {
         if (err) { return next(err); }
         if (results.book==null) { // No results.
-            res.redirect('/catalog/books');
+            res.redirect('/books');
         }
         // Successful, so render.
         res.render('book_delete', { title: 'Delete Book', book: results.book, book_instances: results.book_instances } );
@@ -205,7 +205,7 @@ exports.book_delete_post = function (req, res) {
             Book.findByIdAndRemove(req.body.bookid, function deleteBook(err) {
                 if (err) { return next(err); }
                 // Success - go to author list
-                res.redirect('/catalog/books')
+                res.redirect('/books')
             })
         }
     });

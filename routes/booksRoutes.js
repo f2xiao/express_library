@@ -13,7 +13,15 @@ router
 router
     .route('/:id')
     .get(book_controller.book_detail)
-    .patch(book_controller.book_update_post)
-    .delete(book_controller.book_delete_post);
+
+router
+    .route('/:id/delete')
+    .get(book_controller.book_delete_get)
+    .post(book_controller.book_delete_post)
+
+router
+    .route('/:id/update')
+    .get(book_controller.book_update_get)
+    .post(book_controller.book_update_post)    
 
 module.exports = router;  

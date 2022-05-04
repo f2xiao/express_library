@@ -9,7 +9,6 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 //Import routes for "catalog" area of site
-const catalogRouter = require('./routes/catalog'); 
 const booksRouter = require('./routes/booksRoutes');
 const authorsRouter = require('./routes/authorsRoutes');
 const genresRouter = require('./routes/genresRoutes');
@@ -41,8 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-// Add catalog routes to middleware chain.
-app.use('/catalog', catalogRouter);  
+// Add catalog routes to middleware chain. 
 app.use('/books', booksRouter);
 app.use('/authors', authorsRouter);
 app.use('/genres', genresRouter);

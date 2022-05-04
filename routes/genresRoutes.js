@@ -13,7 +13,15 @@ router
 router
     .route('/:id')
     .get(genre_controller.genre_detail)
-    .patch(genre_controller.genre_update_post)
-    .delete(genre_controller.genre_delete_post);
+
+router
+    .route('/:id/delete')
+    .get(genre_controller.genre_delete_get)
+    .post(genre_controller.genre_delete_post)
+
+router
+    .route('/:id/update')
+    .get(genre_controller.genre_update_get)
+    .post(genre_controller.genre_update_post)
 
 module.exports = router; 

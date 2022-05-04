@@ -106,7 +106,7 @@ exports.author_delete_get = function(req, res, next) {
     }, function(err, results) {
         if (err) { return next(err); }
         if (results.author==null) { // No results.
-            res.redirect('/catalog/authors');
+            res.redirect('/authors');
         }
         // Successful, so render.
         res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books } );
@@ -139,7 +139,7 @@ exports.author_delete_post = function (req, res, next) {
             Author.findByIdAndRemove(req.body.authorid, function deleteAuthor(err) {
                 if (err) { return next(err); }
                 // Success - go to author list
-                res.redirect('/catalog/authors')
+                res.redirect('/authors')
             })
         }
     });

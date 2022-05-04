@@ -13,7 +13,15 @@ router
 router
     .route('/:id')
     .get(author_controller.author_detail)
-    .patch(author_controller.author_update_post)
-    .delete(author_controller.author_delete_post);
+
+router
+    .route('/:id/delete')
+    .get(author_controller.author_delete_get)
+    .post(author_controller.author_delete_post)
+
+router
+    .route('/:id/update')
+    .get(author_controller.author_update_get)
+    .post(author_controller.author_update_post) 
 
 module.exports = router;  

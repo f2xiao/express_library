@@ -101,7 +101,7 @@ exports.bookinstance_delete_get = function (req, res, next) {
         .exec(function (err, bookinstance) {
             if (err) { return next(err); }
             if (bookinstance==null) { // No results.
-                res.redirect('/catalog/bookinstances');
+                res.redirect('/bookinstances');
             }
             // Successful, so render.
             res.render('bookinstance_delete', { title: 'Delete Bookinstance', bookinstance: bookinstance} );
@@ -115,7 +115,7 @@ exports.bookinstance_delete_post = function(req, res) {
     BookInstance.findByIdAndRemove(req.body.bookinstanceid, function deleteBookInstance(err) {
         if (err) { return next(err); }
         // Success - go to author list
-        res.redirect('/catalog/bookinstances')
+        res.redirect('/bookinstances')
     })
 };
 
