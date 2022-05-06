@@ -11,6 +11,11 @@ router
     .post(bookinstance_controller.bookinstance_create_post); 
 
 router
+    .route('/create')
+    .get(bookinstance_controller.bookinstance_create_get)
+    .post(bookinstance_controller.bookinstance_create_post); 
+
+router
     .route('/:id')
     .get(bookinstance_controller.bookinstance_detail)
 

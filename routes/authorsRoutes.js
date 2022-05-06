@@ -8,6 +8,10 @@ const author_controller = require('../controllers/authorController');
 router
     .route('/')
     .get(author_controller.author_list) // get all authors
+
+router
+    .route('/create')
+    .get(author_controller.author_create_get)
     .post(author_controller.author_create_post); 
 
 router

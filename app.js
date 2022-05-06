@@ -3,6 +3,7 @@ require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const expressSession = require('express-session');
+const MongoStore = require('connect-mongo');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -45,7 +46,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(expressSession({
-  store:,
+  store:MongoStore.create({
+    mongoUrl: mongoDB,
+    ttl: 2 * 60 * 60,
+    autoRemove: 'native'
+  }),
   secret: process.env.TOKEN_KEY,
   resave: false,
   saveUninitialized: false

@@ -11,6 +11,11 @@ router
     .post(genre_controller.genre_create_post); 
 
 router
+    .route('/create')
+    .get(genre_controller.genre_create_get)
+    .post(genre_controller.genre_create_post); 
+
+router
     .route('/:id')
     .get(genre_controller.genre_detail)
 

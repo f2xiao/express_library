@@ -28,13 +28,13 @@ html(lang='en')
           if session.isLoggedIn
             ul 
               li
-                  a(href='books/create') Create a new book
+                  a(href='/books/create') Create a new book
               li
-                  a(href='authors/create') Create a new author
+                  a(href='/authors/create') Create a new author
               li
-                  a(href='genres/create') Create a new genre
+                  a(href='/genres/create') Create a new genre
               li
-                  a(href='bookinstances/create') Create a new bookinstance
+                  a(href='/bookinstances/create') Create a new bookinstance
               p
                 form(action="/auth/logout", method="get")
                   button(type="submit") Logout
