@@ -6,7 +6,7 @@ const { body,validationResult } = require('express-validator');
 
 var async = require('async');
 
-exports.index = function(req, res) {
+exports.index = function (req, res, next) {
 
     async.parallel({
         book_count: function(callback) {
@@ -24,8 +24,8 @@ exports.index = function(req, res) {
         genre_count: function(callback) {
             Genre.countDocuments({}, callback);
         }
-    }, function(err, results) {
-        res.render('index', { title: 'Local Library Home', error: err, data: results });
+    }, function(error, results) {
+        res.render('index', { title: 'Local Library Home', error: error, data: results });
     });
 };
 
@@ -41,8 +41,7 @@ exports.book_list = function(req, res, next) {
         //Successful, so render
         res.render('book_list', { title: 'Book List', book_list: list_books });
       });
-  
-  };
+};
   
 
 // Display detail page for a specific book.
@@ -71,7 +70,6 @@ exports.book_detail = function(req, res, next) {
         // Successful, so render.
         res.render('book_detail', { title: results.book.title, book: results.book, book_instances: results.book_instance } );
     });
-
 };
 
 // Display book create form on GET.

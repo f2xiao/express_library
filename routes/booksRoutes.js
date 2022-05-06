@@ -8,6 +8,10 @@ var book_controller = require('../controllers/bookController');
 router
     .route('/')
     .get(book_controller.book_list) // get all books
+
+router
+    .route('/create')
+    .get(book_controller.book_create_get)
     .post(book_controller.book_create_post); 
 
 router

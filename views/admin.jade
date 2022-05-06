@@ -17,15 +17,24 @@ block content
       li #[strong Copies available:] !{data.book_instance_available_count}
       li #[strong Authors:] !{data.author_count}
       li #[strong Genres:] !{data.genre_count}
-
-    form(action="/login", method="post")
-              label(for="username") Username:
-              input(type="text", name="username")
-              br
-              label(for="password") Password:
-              input(type="password", name="password")
-              br
-              p 
-                button(type="submit") Login as Admin
-              if error
-                p Something is wrong, please try again.
+    ul
+        li
+            a(href='/') Home
+        li
+            a(href='/books') All books
+        li
+            a(href='/authors') All authors
+        li
+            a(href='/genres') All genres
+        li
+            a(href='/bookinstances') All book-instances
+        li
+            a(href='books/create') Create a new book
+        li
+            a(href='authors/create') Create a new author
+        li
+            a(href='genres/create') Create a new genre
+        li
+            a(href='bookinstances/create') Create a new bookinstance
+    
+    

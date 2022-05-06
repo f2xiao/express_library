@@ -5,9 +5,10 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const auth = require('./middleware/auth.js');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const usersRouter = require('./routes/usersRoutes');
 //Import routes for "catalog" area of site
 const booksRouter = require('./routes/booksRoutes');
 const authorsRouter = require('./routes/authorsRoutes');
@@ -21,6 +22,7 @@ const app = express();
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
+const { ppid } = require('process');
 const mongoDB = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.pcocp.mongodb.net/${process.env.MONGO_DATABASE}?retryWrites=true&w=majority`;
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -38,12 +40,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-// Add catalog routes to middleware chain. 
-app.use('/books', booksRouter);
-app.use('/authors', authorsRouter);
-app.use('/genres', genresRouter);
+app.use('/login', usersRouter);
+app.use('/books',auth,booksRouter);
+app.use('/authors',authorsRouter);
+app.use('/genres',genresRouter);
 app.use('/bookinstances', bookinstancesRouter);
 
 // catch 404 and forward to error handler
