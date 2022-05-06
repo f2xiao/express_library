@@ -7,7 +7,6 @@ const { body,validationResult } = require('express-validator');
 var async = require('async');
 
 exports.index = function (req, res, next) {
-
     async.parallel({
         book_count: function(callback) {
             Book.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
@@ -24,7 +23,7 @@ exports.index = function (req, res, next) {
         genre_count: function(callback) {
             Genre.countDocuments({}, callback);
         }
-    }, function(error, results) {
+    }, function (error,results) {
         res.render('index', { title: 'Local Library Home', error: error, data: results });
     });
 };

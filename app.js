@@ -27,7 +27,12 @@ const mongoDB = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PAS
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
+// app.use(function (req, res, next) {
+//   // Make `user` and `authenticated` available in templates
+//   res.locals.token = req.user.token
+//   // res.locals.authenticated = !req.user.anonymous
+//   next()
+// })
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -41,9 +46,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 app.use('/', indexRouter);
 app.use('/login', usersRouter);
-app.use('/books',auth,booksRouter);
+app.use('/books',booksRouter);
 app.use('/authors',authorsRouter);
 app.use('/genres',genresRouter);
 app.use('/bookinstances', bookinstancesRouter);
